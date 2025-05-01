@@ -14,7 +14,7 @@ import { db } from "./firebaseConfig";
 
 interface Promocao {
   id: string;
-  mercado: string;
+  supermercado: string;
   produto: string;
   preco: number;
 }
@@ -41,7 +41,7 @@ export default function App() {
         const d = doc.data();
         lista.push({
           id: doc.id,
-          mercado: d.mercado,
+          supermercado: d.supermercado,
           produto: d.produto,
           preco: d.preco,
         });
@@ -63,7 +63,8 @@ export default function App() {
   // Aplica filtros de mercado e busca por produto (case-insensitive)
   const promocoesFiltradas = promocoes
     .filter(
-      (p) => mercadoSelecionado === "Todos" || p.mercado === mercadoSelecionado
+      (p) =>
+        mercadoSelecionado === "Todos" || p.supermercado === mercadoSelecionado
     )
     .filter((p) => p.produto.toLowerCase().includes(busca.toLowerCase()));
 
@@ -105,7 +106,7 @@ export default function App() {
           renderItem={({ item }) => (
             <View style={styles.card}>
               <Text style={styles.produto}>{item.produto}</Text>
-              <Text>Mercado: {item.mercado}</Text>
+              <Text>Mercado: {item.supermercado}</Text>
               <Text>Preço: R$ {item.preco.toFixed(2)}</Text>
             </View>
           )}
