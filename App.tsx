@@ -89,6 +89,7 @@ export default function App() {
         ))}
       </Picker>
 
+      <Text style={styles.label}>Buscar produto:</Text>
       <TextInput
         style={styles.input}
         placeholder="Buscar produto..."
