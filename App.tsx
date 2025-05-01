@@ -22,8 +22,9 @@ interface Promocao {
 export default function App() {
   const [promocoes, setPromocoes] = useState<Promocao[]>([]);
   const [carregando, setCarregando] = useState(true);
-  const [mercadoSelecionado, setMercadoSelecionado] = useState<string>("Todos");
-  const [mercadosUnicos, setMercadosUnicos] = useState<string[]>([]);
+  const [supermercadoSelecionado, setMercadoSelecionado] =
+    useState<string>("Todos");
+  const [supermercadosUnicos, setMercadosUnicos] = useState<string[]>([]);
   const [busca, setBusca] = useState<string>(""); // estado da busca
 
   // Busca e ordena promoções
@@ -45,7 +46,7 @@ export default function App() {
           produto: d.produto,
           preco: d.preco,
         });
-        setMercs.add(d.mercado);
+        setMercs.add(d.supermercado);
       });
 
       setPromocoes(lista);
@@ -64,13 +65,14 @@ export default function App() {
   const promocoesFiltradas = promocoes
     .filter(
       (p) =>
-        mercadoSelecionado === "Todos" || p.supermercado === mercadoSelecionado
+        supermercadoSelecionado === "Todos" ||
+        p.supermercado === supermercadoSelecionado
     )
     .filter((p) => p.produto.toLowerCase().includes(busca.toLowerCase()));
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Promoções</Text>
+      <Text style={styles.titulo}>Comparou-ta-barato</Text>
 
       <TouchableOpacity style={styles.botao} onPress={carregarPromocoes}>
         <Text style={styles.textoBotao}>🔄 Atualizar</Text>
@@ -78,11 +80,11 @@ export default function App() {
 
       <Text style={styles.label}>Filtrar por mercado:</Text>
       <Picker
-        selectedValue={mercadoSelecionado}
+        selectedValue={supermercadoSelecionado}
         onValueChange={setMercadoSelecionado}
         style={styles.picker}
       >
-        {mercadosUnicos.map((m) => (
+        {supermercadosUnicos.map((m) => (
           <Picker.Item key={m} label={m} value={m} />
         ))}
       </Picker>
@@ -106,7 +108,7 @@ export default function App() {
           renderItem={({ item }) => (
             <View style={styles.card}>
               <Text style={styles.produto}>{item.produto}</Text>
-              <Text>Mercado: {item.supermercado}</Text>
+              <Text>Supermercado: {item.supermercado}</Text>
               <Text>Preço: R$ {item.preco.toFixed(2)}</Text>
             </View>
           )}
